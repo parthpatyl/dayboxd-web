@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-primary: #14181c;
+    --bg-surface: #1f242d;
+    --bg-elevated: #2c3440;
+    --border-subtle: rgba(255, 255, 255, 0.1);
+    --border-strong: rgba(255, 255, 255, 0.2);
+    --text-primary: #ffffff;
+    --text-secondary: #a1a1aa;
+    --text-muted: #71717a;
+    --brand: #00e054;
+    --brand-glow: rgba(0, 224, 84, 0.25);
+  }
+
+  [data-theme="light"] {
+    --bg-primary: #f7f6f2;
+    --bg-surface: #ffffff;
+    --bg-elevated: #eae8e0;
+    --border-subtle: rgba(0, 0, 0, 0.1);
+    --border-strong: rgba(0, 0, 0, 0.2);
+    --text-primary: #121212;
+    --text-secondary: #52525b;
+    --text-muted: #71717a;
+    --brand: #00b344;
+    --brand-glow: rgba(0, 179, 68, 0.2);
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+}
+
+.font-serif {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.bg-theme-primary {
+  background-color: var(--bg-primary);
+}
+.bg-theme-surface {
+  background-color: var(--bg-surface);
+}
+.bg-theme-elevated {
+  background-color: var(--bg-elevated);
+}
+.text-theme-primary {
+  color: var(--text-primary);
+}
+.text-theme-secondary {
+  color: var(--text-secondary);
+}
+.text-theme-muted {
+  color: var(--text-muted);
+}
+.border-theme-subtle {
+  border-color: var(--border-subtle);
+}
+.border-theme-strong {
+  border-color: var(--border-strong);
+}
