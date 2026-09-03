@@ -9,6 +9,8 @@ import {
   Moon, 
   Heart 
 } from 'lucide-react';
+import { Analytics } from '@vercel/analytics/react';
+import { track } from '@vercel/analytics';
 
 export const App: React.FC = () => {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
@@ -19,11 +21,29 @@ export const App: React.FC = () => {
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(nextTheme);
+    try {
+      track('theme_toggle', { to: nextTheme });
+    } catch {
+      // Ignore if analytics is blocked
+    }
   };
 
-  const triggerDownload = () => {
+  const triggerDownload = (location: string = 'hero') => {
     setDownloadStarted(true);
+
+    // Track download event in Vercel Analytics
+    try {
+      track('apk_download', {
+        source: location,
+        version: '1.0.0',
+        platform: 'android'
+      });
+    } catch {
+      // Ignore if analytics is blocked
+    }
+
     const link = document.createElement('a');
     link.href = '/downloads/dayboxd-app.apk';
     link.download = 'dayboxd-app.apk';
@@ -38,6 +58,9 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-theme-primary text-theme-primary font-sans antialiased selection:bg-[#00e054] selection:text-black transition-colors duration-200">
+      {/* Vercel Web Analytics Tracker */}
+      <Analytics />
+
       {/* Minimal Header */}
       <header className="w-full border-b border-theme-subtle bg-theme-primary/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-5xl mx-auto px-6 h-18 flex items-center justify-between">
@@ -66,7 +89,7 @@ export const App: React.FC = () => {
             </button>
 
             <button
-              onClick={triggerDownload}
+              onClick={() => triggerDownload('header_button')}
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#00e054] hover:bg-[#00c048] text-black font-semibold text-xs tracking-wide transition-all active:scale-95 cursor-pointer shadow-sm"
             >
               <Download className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -108,12 +131,12 @@ export const App: React.FC = () => {
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <button
-            onClick={triggerDownload}
+            onClick={() => triggerDownload('hero_button')}
             className="w-full sm:w-auto flex items-center justify-center gap-3 px-9 py-4 rounded-xl bg-[#00e054] hover:bg-[#00c048] text-black font-semibold text-base tracking-wide transition-all active:scale-95 cursor-pointer shadow-md"
           >
             <Download className="w-5 h-5 stroke-[2.5]" />
             <span>{downloadStarted ? 'Downloading APK...' : 'Download for Android'}</span>
-            <span className="text-xs opacity-75 font-mono ml-1">1.6 MB</span>
+            <span className="text-xs opacity-75 font-mono ml-1">17.6 MB</span>
           </button>
         </div>
       </section>
@@ -250,11 +273,11 @@ export const App: React.FC = () => {
 
         <div className="pt-3">
           <button
-            onClick={triggerDownload}
+            onClick={() => triggerDownload('bottom_cta')}
             className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-[#00e054] hover:bg-[#00c048] text-black font-semibold text-sm transition-all active:scale-95 cursor-pointer shadow-md"
           >
             <Download className="w-4 h-4 stroke-[2.5]" />
-            <span>Download APK (1.6 MB)</span>
+            <span>Download APK (17.6 MB)</span>
           </button>
         </div>
       </section>
