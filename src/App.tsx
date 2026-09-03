@@ -3,18 +3,82 @@ import {
   Download, 
   Star, 
   Film, 
-  BarChart3, 
   ShieldCheck, 
   Sun, 
   Moon, 
-  Heart 
+  Heart,
+  Sparkles,
+  Layers,
+  ArrowRight
 } from 'lucide-react';
 import { Analytics } from '@vercel/analytics/react';
 import { track } from '@vercel/analytics';
 
+interface PosterTheme {
+  day: string;
+  label: string;
+  tagline: string;
+  quote: string;
+  rating: string;
+  stars: number;
+  bgGradient: string;
+  accentColor: string;
+  subMeta: string;
+}
+
+const POSTER_THEMES: PosterTheme[] = [
+  {
+    day: 'MON',
+    label: 'Opening Scene',
+    tagline: 'ACT I • MONDAY',
+    quote: 'A quiet morning coffee, watching the rain begin.',
+    rating: '★★★★½',
+    stars: 4.5,
+    bgGradient: 'from-[#0f1912] to-[#14181c]',
+    accentColor: '#00e054',
+    subMeta: '3 SCENES • 08:30 AM'
+  },
+  {
+    day: 'WED',
+    label: 'Midweek Pause',
+    tagline: 'ACT II • WEDNESDAY',
+    quote: 'Halfway through the script, finding steady momentum.',
+    rating: '★★★★☆',
+    stars: 4.0,
+    bgGradient: 'from-[#1a170f] to-[#14181c]',
+    accentColor: '#ffbb00',
+    subMeta: '4 SCENES • 02:15 PM'
+  },
+  {
+    day: 'FRI',
+    label: 'Nocturne',
+    tagline: 'CLIMAX • FRIDAY',
+    quote: 'City lights, late night jazz, and good company.',
+    rating: '★★★★★',
+    stars: 5.0,
+    bgGradient: 'from-[#121324] to-[#14181c]',
+    accentColor: '#4080ff',
+    subMeta: '5 SCENES • 10:45 PM'
+  },
+  {
+    day: 'SUN',
+    label: 'The Reset',
+    tagline: 'EPILOGUE • SUNDAY',
+    quote: 'Turning the final page before the next act begins.',
+    rating: '★★★★½',
+    stars: 4.5,
+    bgGradient: 'from-[#1f1214] to-[#14181c]',
+    accentColor: '#ff5577',
+    subMeta: '2 SCENES • 07:00 PM'
+  }
+];
+
 export const App: React.FC = () => {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const [downloadStarted, setDownloadStarted] = useState(false);
+  const [selectedDayIndex, setSelectedDayIndex] = useState(0);
+
+  const activePoster = POSTER_THEMES[selectedDayIndex];
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -26,11 +90,11 @@ export const App: React.FC = () => {
     try {
       track('theme_toggle', { to: nextTheme });
     } catch {
-      // Ignore if analytics is blocked
+      // Ignore
     }
   };
 
-  const triggerDownload = (location: string = 'hero') => {
+  const triggerDownload = (location: string = 'hero_pill') => {
     setDownloadStarted(true);
 
     try {
@@ -40,7 +104,7 @@ export const App: React.FC = () => {
         platform: 'android'
       });
     } catch {
-      // Ignore if analytics is blocked
+      // Ignore
     }
 
     const link = document.createElement('a');
@@ -57,12 +121,11 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-theme-primary text-theme-primary font-sans antialiased selection:bg-[#00e054] selection:text-black transition-colors duration-200">
-      {/* Vercel Web Analytics Tracker */}
       <Analytics />
 
-      {/* Minimal Condensed Header */}
+      {/* Compact Top Navigation Bar */}
       <header className="w-full border-b border-theme-subtle bg-theme-primary/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <img 
               src="/app-icon.png" 
@@ -74,10 +137,10 @@ export const App: React.FC = () => {
             </span>
           </div>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-3">
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-lg border border-theme-subtle bg-theme-surface hover:border-theme-strong text-theme-secondary hover:text-theme-primary transition-all active:scale-95 cursor-pointer"
+              className="p-2 rounded-xl border border-theme-subtle bg-theme-surface hover:border-theme-strong text-theme-secondary hover:text-theme-primary transition-all active:scale-95 cursor-pointer"
               title={`Switch to ${theme === 'dark' ? 'Editorial Light' : 'Cinema Dark'}`}
             >
               {theme === 'dark' ? (
@@ -89,201 +152,242 @@ export const App: React.FC = () => {
 
             <button
               onClick={() => triggerDownload('header_button')}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#00e054] hover:bg-[#00c048] text-black font-semibold text-xs tracking-wide transition-all active:scale-95 cursor-pointer shadow-xs"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#00e054] hover:bg-[#00c048] text-black font-semibold text-xs tracking-wide transition-all active:scale-95 cursor-pointer shadow-xs"
             >
-              <Download className="w-3 h-3 stroke-[2.5]" />
+              <Download className="w-3.5 h-3.5 stroke-[2.5]" />
               <span>{downloadStarted ? 'Downloading...' : 'Get APK'}</span>
             </button>
           </div>
         </div>
       </header>
 
-      {/* Hero Section (Vertically Condensed) */}
-      <section className="pt-8 sm:pt-12 pb-10 sm:pb-12 px-4 sm:px-6 text-center max-w-3xl mx-auto">
-        <div className="text-[11px] sm:text-xs font-mono font-bold tracking-[3px] text-theme-muted uppercase mb-4">
-          Personal Cinema
-        </div>
+      {/* Main Bento Grid Layout */}
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5">
+          
+          {/* TILE 1: Bento-Dominant Hero & Direct Download (Span 7 cols) */}
+          <div className="lg:col-span-7 bg-theme-surface border border-theme-subtle rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-sm relative overflow-hidden">
+            {/* Top Eyebrow row */}
+            <div className="flex items-center justify-between gap-2 mb-6">
+              <span className="text-[10px] sm:text-xs font-mono font-bold tracking-[2px] text-theme-muted uppercase px-2.5 py-1 rounded-full border border-theme-subtle bg-theme-elevated">
+                Personal Cinema
+              </span>
+              <span className="text-[10px] font-mono text-[#00e054] font-semibold bg-[#00e054]/10 border border-[#00e054]/20 px-2 py-0.5 rounded-md">
+                v1.0.0 APK
+              </span>
+            </div>
 
-        {/* Clean Borderless Icon */}
-        <div className="flex justify-center mb-5">
-          <img 
-            src="/app-icon.png" 
-            alt="Dayboxd" 
-            className="w-20 h-20 sm:w-24 sm:h-24 object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.4)]" 
-          />
-        </div>
-
-        {/* Hero Heading */}
-        <h1 className="text-3xl sm:text-5xl font-semibold leading-[1.18] tracking-[-1px] text-theme-primary mb-4">
-          Every day, <span className="text-[#00e054]">a feature film</span>
-        </h1>
-
-        {/* 2-Liner Content About the App */}
-        <div className="text-sm sm:text-base text-theme-secondary font-normal leading-relaxed max-w-xl mx-auto mb-6 space-y-1">
-          <p>
-            Treat every day like a feature film—rate your day in half-stars, log memorable quotes, and collect cinematic posters.
-          </p>
-          <p className="text-xs sm:text-sm text-theme-muted">
-            An offline-first personal sanctuary designed to turn everyday life into a timeless visual archive.
-          </p>
-        </div>
-
-        <div className="flex items-center justify-center">
-          <button
-            onClick={() => triggerDownload('hero_button')}
-            className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-7 py-3 rounded-xl bg-[#00e054] hover:bg-[#00c048] text-black font-semibold text-sm tracking-wide transition-all active:scale-95 cursor-pointer shadow-md"
-          >
-            <Download className="w-4 h-4 stroke-[2.5]" />
-            <span>{downloadStarted ? 'Downloading APK...' : 'Download for Android'}</span>
-            <span className="text-xs opacity-75 font-mono ml-1">17.6 MB</span>
-          </button>
-        </div>
-      </section>
-
-      {/* How it Works Section (Compact 2-Column) */}
-      <section className="py-10 sm:py-12 px-4 sm:px-6 max-w-4xl mx-auto border-t border-theme-subtle">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 items-center">
-          <div>
-            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-theme-primary mb-6 leading-snug">
-              How it works
-            </h2>
-
-            <div className="space-y-4 text-theme-secondary">
-              <div className="space-y-1">
-                <div className="text-sm sm:text-base font-semibold text-theme-primary">
-                  1. Rate your day
+            {/* Center Content */}
+            <div className="space-y-4 mb-8">
+              <div className="flex items-center gap-4">
+                <img 
+                  src="/app-icon.png" 
+                  alt="Dayboxd 3D Icon" 
+                  className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.4)] shrink-0" 
+                />
+                <div>
+                  <h1 className="text-3xl sm:text-5xl font-semibold leading-[1.15] tracking-[-1.5px] text-theme-primary">
+                    Every day, <span className="text-[#00e054]">a feature film</span>
+                  </h1>
                 </div>
-                <p className="text-xs sm:text-sm text-theme-muted leading-relaxed">
-                  0.5–5 stars with a personal moment and dialogue quote.
-                </p>
               </div>
 
-              <div className="space-y-1">
-                <div className="text-sm sm:text-base font-semibold text-theme-primary">
-                  2. Collect posters
-                </div>
-                <p className="text-xs sm:text-sm text-theme-muted leading-relaxed">
-                  Cinematic 2:3 vertical cards for each day with curated fallback aesthetics.
+              <div className="space-y-1.5 text-sm sm:text-base text-theme-secondary leading-relaxed pt-1">
+                <p>
+                  Treat every day like a feature film—rate your day in half-stars, log memorable quotes, and collect cinematic posters.
+                </p>
+                <p className="text-xs sm:text-sm text-theme-muted">
+                  An offline-first personal sanctuary designed to turn everyday life into a timeless visual archive.
                 </p>
               </div>
+            </div>
 
-              <div className="space-y-1">
-                <div className="text-sm sm:text-base font-semibold text-theme-primary">
-                  3. View your archive
-                </div>
-                <p className="text-xs sm:text-sm text-theme-muted leading-relaxed">
-                  Browse your year through an iconic film wall and Top 4 pinned pinboard.
-                </p>
+            {/* Bottom Download Action */}
+            <div className="space-y-3 pt-2">
+              <button
+                onClick={() => triggerDownload('bento_hero_pill')}
+                className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-3.5 rounded-2xl bg-[#00e054] hover:bg-[#00c048] text-black font-semibold text-sm sm:text-base tracking-wide transition-all active:scale-[0.98] cursor-pointer shadow-md"
+              >
+                <Download className="w-4 h-4 stroke-[2.5]" />
+                <span>{downloadStarted ? 'Starting Download...' : 'Download Android APK'}</span>
+                <span className="text-xs opacity-75 font-mono px-2 py-0.5 rounded bg-black/10">17.6 MB</span>
+              </button>
+
+              <div className="text-[11px] text-theme-muted flex items-center gap-3 flex-wrap">
+                <span>✓ 100% Free & Local-First</span>
+                <span>•</span>
+                <span>✓ Zero Accounts Required</span>
+                <span>•</span>
+                <span>✓ Android 8.0+</span>
               </div>
             </div>
           </div>
 
-          {/* Minimalist App Preview Card */}
-          <div className="bg-theme-surface rounded-2xl border border-theme-subtle p-5 sm:p-6 flex items-center justify-center shadow-xs">
-            <div className="w-48 aspect-[2/3] rounded-xl overflow-hidden border border-theme-strong bg-[#14181c] shadow-xl flex flex-col justify-between p-4 text-white">
-              <div className="flex justify-between items-start">
-                <span className="text-[9px] font-mono tracking-widest text-white/50 uppercase font-semibold">
-                  TODAY
+          {/* TILE 2: Interactive 2:3 Poster Showcase Engine (Span 5 cols) */}
+          <div className="lg:col-span-5 bg-theme-surface border border-theme-subtle rounded-3xl p-5 sm:p-6 flex flex-col justify-between shadow-sm">
+            {/* Header with Switcher Tabs */}
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-1.5">
+                <Film className="w-4 h-4 text-[#00e054]" />
+                <span className="text-xs font-semibold tracking-wide text-theme-primary">
+                  Poster Engine
                 </span>
-                <Heart className="w-3.5 h-3.5 fill-[#ff6060] text-[#ff6060]" />
               </div>
 
-              <div className="text-center space-y-1.5 py-2">
-                <div className="w-9 h-9 mx-auto rounded-full bg-[#00e054]/10 border border-[#00e054]/30 flex items-center justify-center">
-                  <Film className="w-4 h-4 text-[#00e054]" />
-                </div>
-                <p className="text-[11px] font-serif italic text-white/90 line-clamp-2 px-1">
-                  &ldquo;A quiet afternoon coffee, watching the rain.&rdquo;
-                </p>
+              {/* Day Chips */}
+              <div className="flex items-center gap-1 bg-theme-elevated p-1 rounded-xl border border-theme-subtle">
+                {POSTER_THEMES.map((themeItem, idx) => (
+                  <button
+                    key={themeItem.day}
+                    onClick={() => setSelectedDayIndex(idx)}
+                    className={`px-2 py-0.5 rounded-lg text-[10px] font-mono font-bold transition-all cursor-pointer ${
+                      selectedDayIndex === idx
+                        ? 'bg-[#00e054] text-black shadow-xs'
+                        : 'text-theme-muted hover:text-theme-primary'
+                    }`}
+                  >
+                    {themeItem.day}
+                  </button>
+                ))}
               </div>
+            </div>
 
-              <div className="border-t border-white/10 pt-2 space-y-1">
-                <div className="flex items-center justify-between text-[11px] font-bold">
-                  <span>The Sunday Reset</span>
-                  <span className="text-[#00e054]">★★★★½</span>
+            {/* Interactive 2:3 Vertical Card Preview */}
+            <div className="flex items-center justify-center my-2">
+              <div className={`w-52 aspect-[2/3] rounded-2xl p-4 flex flex-col justify-between text-white border border-white/10 shadow-2xl transition-all duration-300 bg-gradient-to-b ${activePoster.bgGradient}`}>
+                <div className="flex items-center justify-between">
+                  <span className="text-[9px] font-mono tracking-widest text-white/50 uppercase font-semibold">
+                    {activePoster.tagline}
+                  </span>
+                  <Heart className="w-3.5 h-3.5 fill-[#ff6060] text-[#ff6060]" />
                 </div>
-                <div className="text-[9px] font-mono text-white/40">3 SCENES • COZY</div>
+
+                <div className="text-center space-y-2 py-2">
+                  <div 
+                    className="w-10 h-10 mx-auto rounded-full flex items-center justify-center border"
+                    style={{ 
+                      backgroundColor: `${activePoster.accentColor}15`,
+                      borderColor: `${activePoster.accentColor}40`,
+                      color: activePoster.accentColor 
+                    }}
+                  >
+                    <Film className="w-4 h-4" />
+                  </div>
+                  <p className="text-xs font-serif italic text-white/90 line-clamp-3 px-1 leading-snug">
+                    &ldquo;{activePoster.quote}&rdquo;
+                  </p>
+                </div>
+
+                <div className="border-t border-white/10 pt-2.5 space-y-1">
+                  <div className="flex items-center justify-between text-xs font-bold">
+                    <span>{activePoster.label}</span>
+                    <span style={{ color: activePoster.accentColor }}>{activePoster.rating}</span>
+                  </div>
+                  <div className="text-[9px] font-mono text-white/40">{activePoster.subMeta}</div>
+                </div>
               </div>
+            </div>
+
+            {/* Tile Footer */}
+            <div className="text-[11px] text-theme-muted text-center pt-2">
+              Tap day chips to preview dynamic day-of-week aesthetics
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Designed for Cinephiles (Compact 3-Column Clean Grid) */}
-      <section className="py-10 sm:py-12 px-4 sm:px-6 bg-theme-surface border-y border-theme-subtle">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-semibold text-center text-theme-primary mb-8 tracking-tight">
-            Designed for cinephiles
-          </h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
-            <div className="space-y-2">
-              <div className="w-8 h-8 rounded-lg bg-theme-elevated border border-theme-subtle flex items-center justify-center text-[#00e054]">
-                <Star className="w-3.5 h-3.5 fill-current" />
+          {/* TILE 3: Offline & Privacy Guarantee (Span 4 cols) */}
+          <div className="lg:col-span-4 bg-theme-surface border border-theme-subtle rounded-3xl p-5 sm:p-6 flex flex-col justify-between shadow-sm space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="w-9 h-9 rounded-xl bg-theme-elevated border border-theme-subtle flex items-center justify-center text-[#00e054]">
+                <ShieldCheck className="w-5 h-5" />
               </div>
-              <h3 className="text-sm sm:text-base font-semibold text-theme-primary">
-                Rate & reflect
+              <span className="text-[10px] font-mono text-theme-muted uppercase tracking-wider">
+                Sanctuary
+              </span>
+            </div>
+
+            <div className="space-y-1.5">
+              <h3 className="text-base font-semibold text-theme-primary">
+                100% On-Device & Private
               </h3>
-              <p className="text-xs sm:text-sm text-theme-secondary leading-relaxed">
-                Track your year in half-star increments with a single memorable quote.
+              <p className="text-xs text-theme-secondary leading-relaxed">
+                Your entries stay stored locally in Dexie.js (IndexedDB). Zero cloud telemetry, zero accounts, zero trackers. Only you see your cinema.
               </p>
             </div>
 
-            <div className="space-y-2">
-              <div className="w-8 h-8 rounded-lg bg-theme-elevated border border-theme-subtle flex items-center justify-center text-[#00e054]">
-                <Film className="w-3.5 h-3.5" />
-              </div>
-              <h3 className="text-sm sm:text-base font-semibold text-theme-primary">
-                Poster gallery
-              </h3>
-              <p className="text-xs sm:text-sm text-theme-secondary leading-relaxed">
-                Cinematic vertical posters. Curated day-of-week graphics or custom camera photos.
-              </p>
-            </div>
-
-            <div className="space-y-2">
-              <div className="w-8 h-8 rounded-lg bg-theme-elevated border border-theme-subtle flex items-center justify-center text-[#00e054]">
-                <BarChart3 className="w-3.5 h-3.5" />
-              </div>
-              <h3 className="text-sm sm:text-base font-semibold text-theme-primary">
-                Pro analytics
-              </h3>
-              <p className="text-xs sm:text-sm text-theme-secondary leading-relaxed">
-                Native SVG rating histograms, monthly heatmaps, and streak tracking.
-              </p>
+            <div className="pt-1">
+              <span className="inline-flex items-center gap-1.5 text-[11px] font-mono text-[#00e054] bg-[#00e054]/10 border border-[#00e054]/20 px-2.5 py-1 rounded-lg">
+                🔒 Encrypted Local-First Store
+              </span>
             </div>
           </div>
+
+          {/* TILE 4: How It Works 3-Step Flow (Span 5 cols) */}
+          <div className="lg:col-span-5 bg-theme-surface border border-theme-subtle rounded-3xl p-5 sm:p-6 flex flex-col justify-between shadow-sm space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="w-9 h-9 rounded-xl bg-theme-elevated border border-theme-subtle flex items-center justify-center text-[#00e054]">
+                <Layers className="w-5 h-5" />
+              </div>
+              <span className="text-[10px] font-mono text-theme-muted uppercase tracking-wider">
+                Workflow
+              </span>
+            </div>
+
+            <div className="grid grid-cols-3 gap-2 text-center pt-1">
+              <div className="bg-theme-elevated/60 border border-theme-subtle p-2.5 rounded-xl space-y-1">
+                <div className="text-xs font-bold text-theme-primary">1. Rate</div>
+                <div className="text-[10px] text-theme-muted leading-tight">0.5–5★ stars & dialogue</div>
+              </div>
+              <div className="bg-theme-elevated/60 border border-theme-subtle p-2.5 rounded-xl space-y-1">
+                <div className="text-xs font-bold text-theme-primary">2. Collect</div>
+                <div className="text-[10px] text-theme-muted leading-tight">2:3 cinematic posters</div>
+              </div>
+              <div className="bg-theme-elevated/60 border border-theme-subtle p-2.5 rounded-xl space-y-1">
+                <div className="text-xs font-bold text-theme-primary">3. Archive</div>
+                <div className="text-[10px] text-theme-muted leading-tight">Top 4 & Film Wall</div>
+              </div>
+            </div>
+
+            <div className="text-[11px] text-theme-muted flex items-center justify-between pt-1">
+              <span>Continuous Live Studio logging</span>
+              <ArrowRight className="w-3.5 h-3.5 text-[#00e054]" />
+            </div>
+          </div>
+
+          {/* TILE 5: Sideloading & Fast Distribution (Span 3 cols) */}
+          <div className="lg:col-span-3 bg-theme-surface border border-theme-subtle rounded-3xl p-5 sm:p-6 flex flex-col justify-between shadow-sm space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="w-9 h-9 rounded-xl bg-theme-elevated border border-theme-subtle flex items-center justify-center text-[#00e054]">
+                <Sparkles className="w-5 h-5" />
+              </div>
+              <span className="text-[10px] font-mono text-theme-muted uppercase tracking-wider">
+                Direct
+              </span>
+            </div>
+
+            <div className="space-y-1">
+              <h3 className="text-sm font-semibold text-theme-primary">
+                Direct Sideloading
+              </h3>
+              <p className="text-xs text-theme-secondary leading-relaxed">
+                Install without app store bloat or forced logins in seconds.
+              </p>
+            </div>
+
+            <button
+              onClick={() => triggerDownload('bento_tile_quick_download')}
+              className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-theme-elevated hover:border-[#00e054] border border-theme-subtle text-xs font-semibold text-theme-primary transition-all active:scale-95 cursor-pointer"
+            >
+              <Download className="w-3.5 h-3.5 text-[#00e054]" />
+              <span>Get APK (17.6 MB)</span>
+            </button>
+          </div>
+
         </div>
-      </section>
-
-      {/* Privacy First Section (Compact) */}
-      <section className="py-10 sm:py-12 px-4 sm:px-6 max-w-xl mx-auto text-center space-y-4">
-        <div className="w-9 h-9 mx-auto rounded-xl bg-theme-surface border border-theme-subtle flex items-center justify-center text-[#00e054]">
-          <ShieldCheck className="w-4.5 h-4.5" />
-        </div>
-
-        <h2 className="text-2xl sm:text-3xl font-semibold text-theme-primary tracking-tight">
-          Privacy first
-        </h2>
-
-        <p className="text-xs sm:text-sm text-theme-secondary leading-relaxed">
-          Your entries stay encrypted on-device. Zero cloud accounts, zero tracking. Only you see your cinema.
-        </p>
-
-        <div className="pt-1">
-          <button
-            onClick={() => triggerDownload('bottom_cta')}
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#00e054] hover:bg-[#00c048] text-black font-semibold text-xs sm:text-sm transition-all active:scale-95 cursor-pointer shadow-sm"
-          >
-            <Download className="w-3.5 h-3.5 stroke-[2.5]" />
-            <span>Download APK (17.6 MB)</span>
-          </button>
-        </div>
-      </section>
+      </main>
 
       {/* Minimal Condensed Footer */}
-      <footer className="py-6 px-4 sm:px-6 text-center text-xs text-theme-muted border-t border-theme-subtle max-w-4xl mx-auto">
-        <div>© {new Date().getFullYear()} Dayboxd. Made for your life story.</div>
+      <footer className="py-6 px-4 sm:px-6 text-center text-xs text-theme-muted border-t border-theme-subtle max-w-6xl mx-auto">
+        <div>© {new Date().getFullYear()} Dayboxd. Treat every day like a feature film.</div>
       </footer>
     </div>
   );
