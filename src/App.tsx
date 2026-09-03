@@ -113,7 +113,7 @@ export const App: React.FC = () => {
           >
             <Download className="w-5 h-5 stroke-[2.5]" />
             <span>{downloadStarted ? 'Downloading APK...' : 'Download for Android'}</span>
-            <span className="text-xs opacity-75 font-mono ml-1">17.6 MB</span>
+            <span className="text-xs opacity-75 font-mono ml-1">1.6 MB</span>
           </button>
         </div>
       </section>
@@ -254,7 +254,7 @@ export const App: React.FC = () => {
             className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-[#00e054] hover:bg-[#00c048] text-black font-semibold text-sm transition-all active:scale-95 cursor-pointer shadow-md"
           >
             <Download className="w-4 h-4 stroke-[2.5]" />
-            <span>Download APK (17.6 MB)</span>
+            <span>Download APK (1.6 MB)</span>
           </button>
         </div>
       </section>
