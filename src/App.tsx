@@ -229,26 +229,28 @@ export const App: React.FC = () => {
 
       {/* Top Header */}
       <header className="w-full border-b border-theme-subtle bg-theme-primary/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-8 h-15 flex items-center justify-between">
+        <div className="w-full max-w-7xl mx-auto px-3 sm:px-8 h-14 sm:h-15 flex items-center justify-between gap-2">
+          {/* Logo & Brand (Never shrink or clip) */}
           <button 
             onClick={() => navigateTo('home')}
-            className="flex items-center gap-3 cursor-pointer group active:scale-95 transition-transform"
+            className="flex items-center gap-2 sm:gap-2.5 cursor-pointer group active:scale-95 transition-transform shrink-0"
           >
             <img 
               src="/app-icon.png" 
               alt="Dayboxd Logo" 
-              className="w-8 h-8 object-contain" 
+              className="w-7 h-7 sm:w-8 sm:h-8 object-contain shrink-0" 
             />
-            <span className="font-bold tracking-tight text-base sm:text-lg text-theme-primary">
+            <span className="font-bold tracking-tight text-sm sm:text-base md:text-lg text-theme-primary">
               Dayboxd
             </span>
           </button>
 
-          <div className="flex items-center gap-2 sm:gap-3">
+          {/* Right Action Controls (Responsive & Compact) */}
+          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
             {/* Suggestions Nav Tab */}
             <button
               onClick={() => navigateTo(currentView === 'suggestions' ? 'home' : 'suggestions')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 border transition-all active:scale-95 text-xs font-mono cursor-pointer ${
+              className={`flex items-center gap-1.5 px-2 sm:px-3 py-1.5 border transition-all active:scale-95 text-xs font-mono cursor-pointer ${
                 currentView === 'suggestions'
                   ? 'border-[#00e054] bg-[#00e054]/10 text-[#00e054] font-semibold'
                   : 'border-theme-subtle bg-theme-surface hover:border-theme-strong text-theme-secondary hover:text-theme-primary'
@@ -256,7 +258,7 @@ export const App: React.FC = () => {
               title="Submit feedback or suggestions"
             >
               <MessageSquarePlus className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Suggestions</span>
+              <span className="hidden md:inline">Suggestions</span>
             </button>
 
             {/* GitHub App Link */}
@@ -264,17 +266,17 @@ export const App: React.FC = () => {
               href="https://github.com/parthpatyl/dayboxd-app"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 px-3 py-1.5 border border-theme-subtle bg-theme-surface hover:border-theme-strong text-theme-secondary hover:text-theme-primary transition-all active:scale-95 text-xs font-mono cursor-pointer"
+              className="flex items-center gap-1.5 px-2 sm:px-3 py-1.5 border border-theme-subtle bg-theme-surface hover:border-theme-strong text-theme-secondary hover:text-theme-primary transition-all active:scale-95 text-xs font-mono cursor-pointer"
               title="View Dayboxd App on GitHub"
             >
               <Github className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">GitHub</span>
+              <span className="hidden md:inline">GitHub</span>
             </a>
 
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="p-2 border border-theme-subtle bg-theme-surface hover:border-theme-strong text-theme-secondary hover:text-theme-primary transition-all active:scale-95 cursor-pointer"
+              className="p-1.5 sm:p-2 border border-theme-subtle bg-theme-surface hover:border-theme-strong text-theme-secondary hover:text-theme-primary transition-all active:scale-95 cursor-pointer"
               title={`Switch to ${theme === 'dark' ? 'Editorial Light' : 'Cinema Dark'}`}
             >
               {theme === 'dark' ? (
@@ -284,13 +286,14 @@ export const App: React.FC = () => {
               )}
             </button>
 
-            {/* Top Download Button */}
+            {/* Top Download Button (Clean & Compact on Mobile) */}
             <button
               onClick={() => triggerDownload('header_button')}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#00e054] hover:bg-[#00c048] text-black font-semibold text-xs tracking-wide transition-all active:scale-95 cursor-pointer shadow-xs"
+              className="flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 bg-[#00e054] hover:bg-[#00c048] text-black font-semibold text-xs tracking-wide transition-all active:scale-95 cursor-pointer shadow-xs whitespace-nowrap"
             >
               <Download className="w-3.5 h-3.5 stroke-[2.5]" />
-              <span>{downloadStarted ? 'Downloading...' : 'Get APK (1.6 MB)'}</span>
+              <span className="inline sm:hidden">APK</span>
+              <span className="hidden sm:inline">Get APK (1.6 MB)</span>
             </button>
           </div>
         </div>
