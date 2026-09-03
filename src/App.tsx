@@ -119,10 +119,10 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-theme-primary text-theme-primary font-sans antialiased selection:bg-[#00e054] selection:text-black transition-colors duration-200">
+    <div className="min-h-screen bg-theme-primary text-theme-primary font-sans antialiased selection:bg-[#00e054] selection:text-black transition-colors duration-200 flex flex-col justify-between">
       <Analytics />
 
-      {/* Compact Top Navigation Bar */}
+      {/* Header with hairline bottom border */}
       <header className="w-full border-b border-theme-subtle bg-theme-primary/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
@@ -136,10 +136,10 @@ export const App: React.FC = () => {
             </span>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-xl border border-theme-subtle bg-theme-surface hover:border-theme-strong text-theme-secondary hover:text-theme-primary transition-all active:scale-95 cursor-pointer"
+              className="p-2 border border-theme-subtle bg-theme-surface hover:border-theme-strong text-theme-secondary hover:text-theme-primary transition-all active:scale-95 cursor-pointer"
               title={`Switch to ${theme === 'dark' ? 'Editorial Light' : 'Cinema Dark'}`}
             >
               {theme === 'dark' ? (
@@ -151,7 +151,7 @@ export const App: React.FC = () => {
 
             <button
               onClick={() => triggerDownload('header_button')}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#00e054] hover:bg-[#00c048] text-black font-semibold text-xs tracking-wide transition-all active:scale-95 cursor-pointer shadow-xs"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#00e054] hover:bg-[#00c048] text-black font-semibold text-xs tracking-wide transition-all active:scale-95 cursor-pointer shadow-xs"
             >
               <Download className="w-3.5 h-3.5 stroke-[2.5]" />
               <span>{downloadStarted ? 'Downloading...' : 'Get APK'}</span>
@@ -160,72 +160,72 @@ export const App: React.FC = () => {
         </div>
       </header>
 
-      {/* Main Bento Grid Layout */}
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5">
+      {/* Main Sharp Outline Bento Grid (No gaps, no rounded corners, 1px border outlines) */}
+      <main className="w-full max-w-6xl mx-auto px-3 sm:px-6 py-4 sm:py-8 flex-1 flex flex-col justify-center">
+        <div className="border border-theme-subtle bg-theme-subtle grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-[1px]">
           
-          {/* TILE 1: Bento-Dominant Hero & Direct Download (Span 7 cols) */}
-          <div className="lg:col-span-7 bg-theme-surface border border-theme-subtle rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-sm relative overflow-hidden">
-            {/* Top Eyebrow row */}
-            <div className="flex items-center justify-between gap-2 mb-6">
-              <span className="text-[10px] sm:text-xs font-mono font-bold tracking-[2px] text-theme-muted uppercase px-2.5 py-1 rounded-full border border-theme-subtle bg-theme-elevated">
+          {/* TILE 1: Main Hero & Direct Download (Span 7 cols on Desktop) */}
+          <div className="md:col-span-2 lg:col-span-7 bg-theme-surface p-5 sm:p-7 md:p-8 flex flex-col justify-between">
+            {/* Eyebrow / Tag */}
+            <div className="flex items-center justify-between gap-2 mb-4 sm:mb-6">
+              <span className="text-[10px] sm:text-xs font-mono font-bold tracking-[2px] text-theme-muted uppercase px-2 py-0.5 border border-theme-subtle bg-theme-elevated">
                 Personal Cinema
               </span>
-              <span className="text-[10px] font-mono text-[#00e054] font-semibold bg-[#00e054]/10 border border-[#00e054]/20 px-2 py-0.5 rounded-md">
+              <span className="text-[10px] font-mono text-[#00e054] font-semibold border border-[#00e054]/30 bg-[#00e054]/10 px-2 py-0.5">
                 v1.0.0 APK
               </span>
             </div>
 
-            {/* Center Content */}
-            <div className="space-y-4 mb-8">
-              <div className="flex items-center gap-4">
+            {/* Core Pitch & Branding */}
+            <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
+              <div className="flex items-center gap-3 sm:gap-4">
                 <img 
                   src="/app-icon.png" 
                   alt="Dayboxd 3D Icon" 
-                  className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.4)] shrink-0" 
+                  className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.3)] shrink-0" 
                 />
                 <div>
-                  <h1 className="text-3xl sm:text-5xl font-semibold leading-[1.15] tracking-[-1.5px] text-theme-primary">
+                  <h1 className="text-2xl sm:text-4xl lg:text-[44px] font-semibold leading-[1.15] tracking-[-1px] text-theme-primary">
                     Every day, <span className="text-[#00e054]">a feature film</span>
                   </h1>
                 </div>
               </div>
 
-              <div className="space-y-1.5 text-sm sm:text-base text-theme-secondary leading-relaxed pt-1">
+              <div className="space-y-1 text-xs sm:text-sm md:text-base text-theme-secondary leading-relaxed pt-1">
                 <p>
                   Treat every day like a feature film—rate your day in half-stars, log memorable quotes, and collect cinematic posters.
                 </p>
-                <p className="text-xs sm:text-sm text-theme-muted">
+                <p className="text-[11px] sm:text-xs text-theme-muted">
                   An offline-first personal sanctuary designed to turn everyday life into a timeless visual archive.
                 </p>
               </div>
             </div>
 
-            {/* Bottom Download Action */}
-            <div className="space-y-3 pt-2">
+            {/* Download CTA Action */}
+            <div className="space-y-2.5 pt-2">
               <button
                 onClick={() => triggerDownload('bento_hero_pill')}
-                className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-3.5 rounded-2xl bg-[#00e054] hover:bg-[#00c048] text-black font-semibold text-sm sm:text-base tracking-wide transition-all active:scale-[0.98] cursor-pointer shadow-md"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3 bg-[#00e054] hover:bg-[#00c048] text-black font-semibold text-xs sm:text-sm tracking-wide transition-all active:scale-[0.98] cursor-pointer shadow-xs"
               >
                 <Download className="w-4 h-4 stroke-[2.5]" />
                 <span>{downloadStarted ? 'Starting Download...' : 'Download Android APK'}</span>
-                <span className="text-xs opacity-75 font-mono px-2 py-0.5 rounded bg-black/10">17.6 MB</span>
+                <span className="text-[11px] opacity-75 font-mono px-1.5 py-0.5 bg-black/10">17.6 MB</span>
               </button>
 
-              <div className="text-[11px] text-theme-muted flex items-center gap-3 flex-wrap">
-                <span>✓ 100% Free & Local-First</span>
+              <div className="text-[10px] sm:text-[11px] text-theme-muted flex items-center gap-2 sm:gap-3 flex-wrap font-mono">
+                <span>✓ 100% Free</span>
                 <span>•</span>
-                <span>✓ Zero Accounts Required</span>
+                <span>✓ Local-First IndexedDB</span>
                 <span>•</span>
                 <span>✓ Android 8.0+</span>
               </div>
             </div>
           </div>
 
-          {/* TILE 2: Interactive 2:3 Poster Showcase Engine (Span 5 cols) */}
-          <div className="lg:col-span-5 bg-theme-surface border border-theme-subtle rounded-3xl p-5 sm:p-6 flex flex-col justify-between shadow-sm">
-            {/* Header with Switcher Tabs */}
-            <div className="flex items-center justify-between mb-4">
+          {/* TILE 2: Interactive Poster Engine (Span 5 cols on Desktop) */}
+          <div className="md:col-span-2 lg:col-span-5 bg-theme-surface p-4 sm:p-6 flex flex-col justify-between">
+            {/* Header & Day Switcher */}
+            <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-1.5">
                 <Film className="w-4 h-4 text-[#00e054]" />
                 <span className="text-xs font-semibold tracking-wide text-theme-primary">
@@ -234,14 +234,14 @@ export const App: React.FC = () => {
               </div>
 
               {/* Day Chips */}
-              <div className="flex items-center gap-1 bg-theme-elevated p-1 rounded-xl border border-theme-subtle">
+              <div className="flex items-center border border-theme-subtle bg-theme-elevated p-0.5">
                 {POSTER_THEMES.map((themeItem, idx) => (
                   <button
                     key={themeItem.day}
                     onClick={() => setSelectedDayIndex(idx)}
-                    className={`px-2 py-0.5 rounded-lg text-[10px] font-mono font-bold transition-all cursor-pointer ${
+                    className={`px-2 py-0.5 text-[10px] font-mono font-bold transition-all cursor-pointer ${
                       selectedDayIndex === idx
-                        ? 'bg-[#00e054] text-black shadow-xs'
+                        ? 'bg-[#00e054] text-black'
                         : 'text-theme-muted hover:text-theme-primary'
                     }`}
                   >
@@ -251,132 +251,131 @@ export const App: React.FC = () => {
               </div>
             </div>
 
-            {/* Interactive 2:3 Vertical Card Preview */}
+            {/* 2:3 Vertical Card Preview */}
             <div className="flex items-center justify-center my-2">
-              <div className={`w-52 aspect-[2/3] rounded-2xl p-4 flex flex-col justify-between text-white border border-white/10 shadow-2xl transition-all duration-300 bg-gradient-to-b ${activePoster.bgGradient}`}>
+              <div className={`w-44 sm:w-48 aspect-[2/3] p-3.5 flex flex-col justify-between text-white border border-white/10 shadow-lg transition-all duration-300 bg-gradient-to-b ${activePoster.bgGradient}`}>
                 <div className="flex items-center justify-between">
-                  <span className="text-[9px] font-mono tracking-widest text-white/50 uppercase font-semibold">
+                  <span className="text-[8px] font-mono tracking-widest text-white/50 uppercase font-semibold">
                     {activePoster.tagline}
                   </span>
-                  <Heart className="w-3.5 h-3.5 fill-[#ff6060] text-[#ff6060]" />
+                  <Heart className="w-3 h-3 fill-[#ff6060] text-[#ff6060]" />
                 </div>
 
-                <div className="text-center space-y-2 py-2">
+                <div className="text-center space-y-1.5 py-1">
                   <div 
-                    className="w-10 h-10 mx-auto rounded-full flex items-center justify-center border"
+                    className="w-8 h-8 mx-auto flex items-center justify-center border"
                     style={{ 
                       backgroundColor: `${activePoster.accentColor}15`,
                       borderColor: `${activePoster.accentColor}40`,
                       color: activePoster.accentColor 
                     }}
                   >
-                    <Film className="w-4 h-4" />
+                    <Film className="w-3.5 h-3.5" />
                   </div>
-                  <p className="text-xs font-serif italic text-white/90 line-clamp-3 px-1 leading-snug">
+                  <p className="text-[11px] font-serif italic text-white/90 line-clamp-3 px-1 leading-tight">
                     &ldquo;{activePoster.quote}&rdquo;
                   </p>
                 </div>
 
-                <div className="border-t border-white/10 pt-2.5 space-y-1">
-                  <div className="flex items-center justify-between text-xs font-bold">
+                <div className="border-t border-white/10 pt-2 space-y-0.5">
+                  <div className="flex items-center justify-between text-[11px] font-bold">
                     <span>{activePoster.label}</span>
                     <span style={{ color: activePoster.accentColor }}>{activePoster.rating}</span>
                   </div>
-                  <div className="text-[9px] font-mono text-white/40">{activePoster.subMeta}</div>
+                  <div className="text-[8px] font-mono text-white/40">{activePoster.subMeta}</div>
                 </div>
               </div>
             </div>
 
-            {/* Tile Footer */}
-            <div className="text-[11px] text-theme-muted text-center pt-2">
-              Tap day chips to preview dynamic day-of-week aesthetics
+            <div className="text-[10px] font-mono text-theme-muted text-center pt-1">
+              Select day chip to inspect fallback themes
             </div>
           </div>
 
-          {/* TILE 3: Offline & Privacy Guarantee (Span 4 cols) */}
-          <div className="lg:col-span-4 bg-theme-surface border border-theme-subtle rounded-3xl p-5 sm:p-6 flex flex-col justify-between shadow-sm space-y-4">
+          {/* TILE 3: Offline & Privacy Security (Span 4 cols) */}
+          <div className="md:col-span-1 lg:col-span-4 bg-theme-surface p-4 sm:p-5 md:p-6 flex flex-col justify-between space-y-3">
             <div className="flex items-center justify-between">
-              <div className="w-9 h-9 rounded-xl bg-theme-elevated border border-theme-subtle flex items-center justify-center text-[#00e054]">
-                <ShieldCheck className="w-5 h-5" />
+              <div className="w-8 h-8 bg-theme-elevated border border-theme-subtle flex items-center justify-center text-[#00e054]">
+                <ShieldCheck className="w-4.5 h-4.5" />
               </div>
-              <span className="text-[10px] font-mono text-theme-muted uppercase tracking-wider">
+              <span className="text-[9px] font-mono text-theme-muted uppercase tracking-wider">
                 Sanctuary
               </span>
             </div>
 
-            <div className="space-y-1.5">
-              <h3 className="text-base font-semibold text-theme-primary">
+            <div className="space-y-1">
+              <h3 className="text-xs sm:text-sm font-semibold text-theme-primary">
                 100% On-Device & Private
               </h3>
-              <p className="text-xs text-theme-secondary leading-relaxed">
-                Your entries stay stored locally in Dexie.js (IndexedDB). Zero cloud telemetry, zero accounts, zero trackers. Only you see your cinema.
+              <p className="text-[11px] sm:text-xs text-theme-secondary leading-relaxed">
+                IndexedDB on hardware. Zero telemetry, zero accounts, zero trackers. Only you see your cinema.
               </p>
             </div>
 
             <div className="pt-1">
-              <span className="inline-flex items-center gap-1.5 text-[11px] font-mono text-[#00e054] bg-[#00e054]/10 border border-[#00e054]/20 px-2.5 py-1 rounded-lg">
-                🔒 Encrypted Local-First Store
+              <span className="inline-block text-[10px] font-mono text-[#00e054] border border-[#00e054]/30 bg-[#00e054]/10 px-2 py-0.5">
+                🔒 Local-First Sandbox
               </span>
             </div>
           </div>
 
           {/* TILE 4: How It Works 3-Step Flow (Span 5 cols) */}
-          <div className="lg:col-span-5 bg-theme-surface border border-theme-subtle rounded-3xl p-5 sm:p-6 flex flex-col justify-between shadow-sm space-y-4">
+          <div className="md:col-span-1 lg:col-span-5 bg-theme-surface p-4 sm:p-5 md:p-6 flex flex-col justify-between space-y-3">
             <div className="flex items-center justify-between">
-              <div className="w-9 h-9 rounded-xl bg-theme-elevated border border-theme-subtle flex items-center justify-center text-[#00e054]">
-                <Layers className="w-5 h-5" />
+              <div className="w-8 h-8 bg-theme-elevated border border-theme-subtle flex items-center justify-center text-[#00e054]">
+                <Layers className="w-4.5 h-4.5" />
               </div>
-              <span className="text-[10px] font-mono text-theme-muted uppercase tracking-wider">
+              <span className="text-[9px] font-mono text-theme-muted uppercase tracking-wider">
                 Workflow
               </span>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 text-center pt-1">
-              <div className="bg-theme-elevated/60 border border-theme-subtle p-2.5 rounded-xl space-y-1">
-                <div className="text-xs font-bold text-theme-primary">1. Rate</div>
-                <div className="text-[10px] text-theme-muted leading-tight">0.5–5★ stars & dialogue</div>
+            <div className="grid grid-cols-3 gap-1.5 text-center pt-1">
+              <div className="bg-theme-elevated/60 border border-theme-subtle p-2 space-y-0.5">
+                <div className="text-[11px] font-bold text-theme-primary">1. Rate</div>
+                <div className="text-[9px] text-theme-muted leading-tight">0.5–5★ scale</div>
               </div>
-              <div className="bg-theme-elevated/60 border border-theme-subtle p-2.5 rounded-xl space-y-1">
-                <div className="text-xs font-bold text-theme-primary">2. Collect</div>
-                <div className="text-[10px] text-theme-muted leading-tight">2:3 cinematic posters</div>
+              <div className="bg-theme-elevated/60 border border-theme-subtle p-2 space-y-0.5">
+                <div className="text-[11px] font-bold text-theme-primary">2. Collect</div>
+                <div className="text-[9px] text-theme-muted leading-tight">2:3 posters</div>
               </div>
-              <div className="bg-theme-elevated/60 border border-theme-subtle p-2.5 rounded-xl space-y-1">
-                <div className="text-xs font-bold text-theme-primary">3. Archive</div>
-                <div className="text-[10px] text-theme-muted leading-tight">Top 4 & Film Wall</div>
+              <div className="bg-theme-elevated/60 border border-theme-subtle p-2 space-y-0.5">
+                <div className="text-[11px] font-bold text-theme-primary">3. Archive</div>
+                <div className="text-[9px] text-theme-muted leading-tight">Film Wall</div>
               </div>
             </div>
 
-            <div className="text-[11px] text-theme-muted flex items-center justify-between pt-1">
-              <span>Continuous Live Studio logging</span>
-              <ArrowRight className="w-3.5 h-3.5 text-[#00e054]" />
+            <div className="text-[10px] font-mono text-theme-muted flex items-center justify-between pt-1">
+              <span>Continuous Live Studio</span>
+              <ArrowRight className="w-3 h-3 text-[#00e054]" />
             </div>
           </div>
 
           {/* TILE 5: Sideloading & Fast Distribution (Span 3 cols) */}
-          <div className="lg:col-span-3 bg-theme-surface border border-theme-subtle rounded-3xl p-5 sm:p-6 flex flex-col justify-between shadow-sm space-y-4">
+          <div className="md:col-span-2 lg:col-span-3 bg-theme-surface p-4 sm:p-5 md:p-6 flex flex-col justify-between space-y-3">
             <div className="flex items-center justify-between">
-              <div className="w-9 h-9 rounded-xl bg-theme-elevated border border-theme-subtle flex items-center justify-center text-[#00e054]">
-                <Sparkles className="w-5 h-5" />
+              <div className="w-8 h-8 bg-theme-elevated border border-theme-subtle flex items-center justify-center text-[#00e054]">
+                <Sparkles className="w-4.5 h-4.5" />
               </div>
-              <span className="text-[10px] font-mono text-theme-muted uppercase tracking-wider">
-                Direct
+              <span className="text-[9px] font-mono text-theme-muted uppercase tracking-wider">
+                Release
               </span>
             </div>
 
-            <div className="space-y-1">
-              <h3 className="text-sm font-semibold text-theme-primary">
-                Direct Sideloading
+            <div className="space-y-0.5">
+              <h3 className="text-xs sm:text-sm font-semibold text-theme-primary">
+                Direct Distribution
               </h3>
-              <p className="text-xs text-theme-secondary leading-relaxed">
-                Install without app store bloat or forced logins in seconds.
+              <p className="text-[11px] text-theme-secondary leading-relaxed">
+                Clean APK install without store logins or telemetry.
               </p>
             </div>
 
             <button
               onClick={() => triggerDownload('bento_tile_quick_download')}
-              className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-theme-elevated hover:border-[#00e054] border border-theme-subtle text-xs font-semibold text-theme-primary transition-all active:scale-95 cursor-pointer"
+              className="w-full flex items-center justify-center gap-1.5 py-1.5 px-2.5 bg-theme-elevated hover:border-[#00e054] border border-theme-subtle text-[11px] font-semibold text-theme-primary transition-all active:scale-95 cursor-pointer font-mono"
             >
-              <Download className="w-3.5 h-3.5 text-[#00e054]" />
+              <Download className="w-3 h-3 text-[#00e054]" />
               <span>Get APK (17.6 MB)</span>
             </button>
           </div>
@@ -385,7 +384,7 @@ export const App: React.FC = () => {
       </main>
 
       {/* Minimal Condensed Footer */}
-      <footer className="py-6 px-4 sm:px-6 text-center text-xs text-theme-muted border-t border-theme-subtle max-w-6xl mx-auto">
+      <footer className="py-4 px-4 text-center text-[11px] font-mono text-theme-muted border-t border-theme-subtle max-w-6xl mx-auto w-full">
         <div>© {new Date().getFullYear()} Dayboxd. Treat every day like a feature film.</div>
       </footer>
     </div>
