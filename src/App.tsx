@@ -209,7 +209,7 @@ export const App: React.FC = () => {
               >
                 <Download className="w-4 h-4 stroke-[2.5]" />
                 <span>{downloadStarted ? 'Starting Download...' : 'Download Android APK'}</span>
-                <span className="text-[11px] opacity-75 font-mono px-1.5 py-0.5 bg-black/10">17.6 MB</span>
+                <span className="text-[11px] opacity-75 font-mono px-1.5 py-0.5 bg-black/10">1.6 MB</span>
               </button>
 
               <div className="text-[10px] sm:text-[11px] text-theme-muted flex items-center gap-2 sm:gap-3 flex-wrap font-mono">
@@ -376,7 +376,7 @@ export const App: React.FC = () => {
               className="w-full flex items-center justify-center gap-1.5 py-1.5 px-2.5 bg-theme-elevated hover:border-[#00e054] border border-theme-subtle text-[11px] font-semibold text-theme-primary transition-all active:scale-95 cursor-pointer font-mono"
             >
               <Download className="w-3 h-3 text-[#00e054]" />
-              <span>Get APK (17.6 MB)</span>
+              <span>Get APK (1.6 MB)</span>
             </button>
           </div>
 
